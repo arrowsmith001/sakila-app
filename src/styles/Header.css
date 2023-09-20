@@ -1,0 +1,37 @@
+/* Header.css */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #111;
+    padding: 20px 50px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+.header__logo {
+    width: 100px;
+    object-fit: contain;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.header__nav {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    color: #fff;
+    text-decoration: none;
+}
+
+.header__nav a {
+    margin-right: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.header__nav a:hover {
+    color: #e50914;
+}

@@ -1,39 +1,35 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import './styles/Layout.css';
+import * as ReactDOM from 'react-dom';
+import FilmsByCategoryList from './FilmsByCategoryList';
+import MovieDetail from './MovieDetail';
+import './styles/App.css';
+import Layout from './Layout';
+import Checkout from './Checkout';
+import FinalCheckout from './FinalCheckout';
+
 
 function App() {
-  const [items, setItems] = useState([]);
-
-  const fetchApiData = async () => {
-
-    console.log("fetchApiData");
-
-    try {
-      const response = await fetch('http://127.0.0.1:8080/films');
-      const json = await response.json();
-      setItems(json);
-    }
-    catch (e) {
-      console.error(e);
-    }
-  };
   return (
-    <div className="App">
-      <h1>Data</h1>
-      <ol>
-        <li>
-          <button onClick={fetchApiData}>Fetch</button>
-        </li>
+    <div className="app">
+      <BrowserRouter basename="">
+        <Routes>
 
-        <ul>
-          {items.map((item, index) => (
-            <li key={index}>{item.title}</li>
-          ))}
-        </ul>
-
-      </ol>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<FilmsByCategoryList />} />
+            <Route path="/movie/:id" element={<MovieDetail />} />
+            <Route path="/checkout/:id" element={<Checkout />} />
+            <Route path="/checkout/:film_id/customer/:customer_id" element={<FinalCheckout />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
 
 export default App;

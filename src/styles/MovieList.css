@@ -1,0 +1,82 @@
+* {
+    color: #fff;
+}
+
+.movie-list-genre {
+
+    background-color: #111;
+}
+
+.movie-list-with-buttons {
+    display: flex;
+    width: 100%;
+    height: 350px;
+    vertical-align: middle;
+    justify-content: center;
+}
+
+.movieList {
+    position: relative;
+    vertical-align: middle;
+    justify-content: center;
+}
+
+.movieList__container {
+    display: flex;
+    scroll-behavior: smooth;
+    gap: 5px;
+    /* Spacing between movies */
+    padding-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+    /* Set the desired fixed height */
+}
+
+.movie {
+    transition: transform 0.2s ease-in-out;
+    height: 100%;
+    width: 200px;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.thumbnail {
+    transition: transform 0.2s ease-in-out;
+    overflow: hidden;
+}
+
+
+.movie:hover .thumbnail {
+    z-index: 1;
+    overflow: visible;
+    /* Bring the hovered image to the front */
+}
+
+.movie:hover {
+    transform: scale(1.4);
+    overflow: visible;
+    /* Bring the hovered image to the front */
+}
+
+
+.movieList__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.pagination__button {
+    display: flex;
+    vertical-align: middle;
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    height: 100%;
+}
+
+.pagination__button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
