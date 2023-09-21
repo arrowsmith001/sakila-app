@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Link, Outlet, Route, Routes } from 'react-router-dom';
 
 import './styles/Layout.css';
 import MovieList from './MovieList';
@@ -10,38 +10,42 @@ import FilmsByCategoryList from './FilmsByCategoryList';
 import * as ReactDOM from 'react-dom';
 
 function Layout() {
+  const logo = require(`./assets/logo.png`);
 
+  function firstTime() {
+
+    localStorage.removeItem('isFirstVisit');
+  }
   return (
     <div className="layout">
       <div className="sidebar">
         <div className="sidebar__logo">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
+          <img onClick={firstTime}
+            src={logo}
             alt="Logo"
           />
         </div>
         <div className="sidebar__menu">
           <ul>
             <li>
-              <a href="#">
-                <i className="fas fa-home"></i> Home
-              </a>
+              <Link to='/'>
+                <h3>Home</h3>
+              </Link>
             </li>
             <li>
-              <a href="#">
-                <i className="fas fa-film"></i> Movies
-              </a>
+              <Link to='/hot'>
+                <h3>What's Hot</h3>
+              </Link>
             </li>
             <li>
-              <a href="#">
-                <i className="fas fa-user"></i> Profile
-              </a>
+              <Link to='/category'>
+                <h3>Categories</h3>
+              </Link>
             </li>
           </ul>
         </div>
       </div>
       <div className="content">
-
         <Outlet />
       </div>
     </div>

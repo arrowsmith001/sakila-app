@@ -1,9 +1,8 @@
-* {
+.MovieList {
     color: #fff;
 }
 
 .movie-list-genre {
-
     background-color: #111;
 }
 
@@ -16,6 +15,7 @@
 }
 
 .movieList {
+    padding: 10px;
     position: relative;
     vertical-align: middle;
     justify-content: center;
@@ -25,37 +25,10 @@
     display: flex;
     scroll-behavior: smooth;
     gap: 5px;
-    /* Spacing between movies */
     padding-bottom: 20px;
     transition: transform 0.3s ease-in-out;
-    /* Set the desired fixed height */
 }
 
-.movie {
-    transition: transform 0.2s ease-in-out;
-    height: 100%;
-    width: 200px;
-    object-fit: cover;
-    overflow: hidden;
-}
-
-.thumbnail {
-    transition: transform 0.2s ease-in-out;
-    overflow: hidden;
-}
-
-
-.movie:hover .thumbnail {
-    z-index: 1;
-    overflow: visible;
-    /* Bring the hovered image to the front */
-}
-
-.movie:hover {
-    transform: scale(1.4);
-    overflow: visible;
-    /* Bring the hovered image to the front */
-}
 
 
 .movieList__pagination {

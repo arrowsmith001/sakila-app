@@ -14,6 +14,8 @@ function MovieDetail() {
     var [movie, setMovie] = useState({});
     var [bg, setBg] = useState({});
     var [img, setImg] = useState({});
+    var [rating, setRating] = useState({});
+    var [runTimeString, setRunTimeString] = useState('');
     var [starringString, setStarringString] = useState('');
 
 
@@ -25,12 +27,23 @@ function MovieDetail() {
             const adjective = movie.description.split(" ")[1];
 
             const bg = require(`./assets/backgrounds/${adjective}.jpg`);
+            const ratingImg = require(`./assets/ratings/${movie.rating}.svg`);
 
             const starringString = 'Starring: ' + movie.actors.map((a) => a.first_name + ' ' + a.last_name).join(', ');
 
+
+            const runTimeInt = movie.length;
+            const h = Math.floor(runTimeInt / 60);
+            const m = runTimeInt - h * 60;
+            var s = '';
+            if (h == 0) s = m + 'm';
+            else s = h + 'h ' + m + 'm';
+
+            setRunTimeString(s);
             setMovie(movie);
             setBg(bg);
             setImg(imagePath);
+            setRating(ratingImg);
             setStarringString(starringString);
         })
 
@@ -43,21 +56,34 @@ function MovieDetail() {
 
                 <div class='movie-detail-left'>
 
-                    <img class="movie-static" src={img} />
+                    <div class="movie-static-container">
+                        <img class="movie-static" src={img} />
+                    </div>
                 </div>
 
-                <div className='title-and-description'>
+                <div className='movie-detail-right'>
 
-                    <h1 class="title">{movie.title}</h1>
-                    <p class="description">{movie.description}</p>
-                    <p class="starring">{starringString}</p>
-
-                    <Link to={"/checkout/" + movie.film_id}>
-                        <div className='button'>
-                            Rent Now for {movie.rental_rate}
+                    <div className='title-and-description'>
+                        <div style={{ 'display': 'inline' }}>
+                            <h1 class="title">{movie.title}</h1>
+                            <p class="runTime">{() => movie.release_year.substring(0, 4)}</p>
                         </div>
+                        <p class="description">{movie.description}</p>
+                        <p class="starring">{starringString}</p>
 
-                    </Link>
+                        <div>
+                            <img src={rating} class="rating" />
+                            <p class="runTime">{runTimeString}</p>
+                        </div>
+                        <div className='rent-buttons'>
+                            <Link to={"/checkout/" + movie.film_id}>
+                                <div className='button'>
+                                    Rent Now for £{movie.rental_rate}
+                                </div>
+
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
 

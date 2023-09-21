@@ -1,0 +1,41 @@
+.WhatsHot {
+    background-color: black;
+}
+
+.wrap-container {
+    flex-wrap: wrap;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    padding-bottom: 200px;
+}
+
+.films-by-category-list-container {
+
+    padding-top: 150px;
+}
+
+.movie-container {
+    padding-top: 200px;
+    height: 350px;
+    padding: 4px;
+}
+
+.container {
+
+    padding-top: 150px;
+    background-color: black;
+}
+
+.title {
+    padding: 32px;
+    margin: 0px;
+}
+
+.title-container {
+    object-fit: contain;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    right: 500px;
+}

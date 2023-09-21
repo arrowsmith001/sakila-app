@@ -44,6 +44,23 @@ export async function getAllFilmsByCategoryId(categoryId) {
     return json;
 }
 
+export async function getRandomFilmSelection(limit) {
+
+    const response = await fetch(baseUrl + '/film/random/' + limit);
+
+    const json = await response.json();
+
+    return json;
+}
+export async function getPopularFilms(limit) {
+
+    const response = await fetch(baseUrl + '/film/popular/' + limit);
+
+    const json = await response.json();
+
+    return json;
+}
+
 export async function getCustomerByEmail(email) {
     console.log(email);
     try {
@@ -88,18 +105,23 @@ export async function getInventoriesByFilmIdAndStoreId(filmId, storeId) {
 
 export async function save(entity, obj) {
 
-    const response = await fetch(baseUrl + '/' + entity,
-        {
-            headers:
+    try {
+        const response = await fetch(baseUrl + '/' + entity,
             {
-                'Content-Type': 'application/json',
-            },
-            method: Method.POST,
-            body: JSON.stringify(obj)
-        });
+                headers:
+                {
+                    'Content-Type': 'application/json',
+                },
+                method: Method.POST,
+                body: JSON.stringify(obj)
+            });
 
-    const json = await response.json();
-    return json;
+        const json = await response.json();
+        return json;
+    }
+    catch (e) {
+        return null;
+    }
 }
 
 export async function getById(entity, id) {

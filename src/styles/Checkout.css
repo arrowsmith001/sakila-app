@@ -1,3 +1,101 @@
-* {
+.Checkout {
     color: black;
+}
+
+
+.form {
+    display: flex;
+    justify-content: center;
+    display: inline-block;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: black;
+    height: 100vh;
+}
+
+.new-customers-form {
+    padding-left: 10%;
+    float: right;
+}
+
+.existing-customers-form {
+    padding-right: 10%;
+    float: left;
+}
+
+.form-inputs {
+    list-style: none;
+}
+
+.form-inputs li {
+    padding: 8px;
+}
+
+input,
+select,
+option,
+button {
+    font-size: 22px;
+    color: black;
+}
+
+button {
+    padding: 8px;
+}
+
+label {
+
+    font-size: 22px;
+}
+
+h1,
+h2 {
+    padding: 12px;
+}
+
+.error-text {
+    color: red;
+    font-size: 20px;
+}
+
+.movie-static-small {
+    padding: 20px;
+    object-fit: contain;
+}
+
+.movie-static-container-small {
+    height: 300px;
+    width: 200px;
+
+    display: flex;
+    justify-content: center;
+
+}
+
+.box {
+    background-color: green;
+    width: 200px;
+    height: 100%;
+    float: left;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.logo {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 8px;
 }

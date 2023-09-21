@@ -1,0 +1,56 @@
+.movie {
+    display: flex;
+    justify-content: center;
+    transition: transform 0.2s ease-in-out;
+    height: 350px;
+    width: 170px;
+    object-fit: cover;
+    overflow: hidden;
+    position: relative;
+}
+
+.thumbnail {
+    transition: transform 0.2s ease-in-out;
+    overflow: hidden;
+    height: 350px;
+}
+
+.movie-title-parent {
+    position: absolute;
+    bottom: 0px;
+    vertical-align: bottom;
+    width: 170px;
+    height: 60px;
+    background-image: linear-gradient(to top, black, black, rgba(0, 0, 0, 0));
+}
+
+.movie-title {
+    position: absolute;
+    vertical-align: bottom;
+    padding-bottom: 4px;
+    text-align: center;
+    font-weight: 700;
+    width: 180px;
+    bottom: 0;
+}
+
+
+.movie:hover .thumbnail {
+    overflow: visible;
+    transition: transform 0.2s ease-in-out;
+}
+
+
+.movie:hover .movie-title-parent {
+    /* background-image: none; */
+    opacity: 0.8;
+    transform: translateY(30px);
+}
+
+.movie:hover {
+    z-index: 99999;
+    position: relative;
+    transform: scale(1.4);
+    overflow: visible;
+    transition: transform 0.2s ease-in-out;
+}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './styles/MovieList.css';
 import * as sakilaApi from './sakilaApi';
 import { Link } from 'react-router-dom';
+import Movie from './Movie';
 
 const posterSrc = "https://postercollector.co.uk/site/posters/2018/01/The-Thing.jpg";
 
@@ -46,7 +47,7 @@ function MovieList({ category: category }) {
             <div className='movie-list-with-buttons'>
                 <button
                     onClick={handlePrevPage}
-                    disabled={endIndex >= movies.length}
+                    disabled={currentPage == 0}
                     className="pagination__button"
                 >
                     {"<"}
@@ -61,27 +62,7 @@ function MovieList({ category: category }) {
 
                         {currentMovies.map((movie) => {
 
-
-                            const imagePath = require(`./assets/posters/${movie.title}.png`);
-
-                            return (
-                                <Link to={'/movie/' + movie.film_id}>
-                                    <div key={movie.id} className='movie'>
-
-                                        <div className="movie__thumbnail">
-                                            <img
-                                                src={imagePath}
-                                                alt={movie.title}
-                                                className="thumbnail"
-                                            />
-                                        </div>
-                                        <div>
-                                            <p>{movie.title}</p>
-                                        </div>
-
-                                    </div>
-                                </Link>
-                            )
+                            return (<Movie movie={movie} />)
                         })}
                     </div>
                     <div className="movieList__pagination">

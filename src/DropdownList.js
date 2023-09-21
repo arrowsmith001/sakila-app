@@ -17,9 +17,9 @@ const DropdownList = ({ label, items, selectedOption, onOptionChange }) => {
           </option>
         ))}
       </select>
-      {selectedOption && (
+      {/* {selectedOption && (
         <p>{items.selectedOption}</p>
-      )}
+      )} */}
     </div>
   );
 };

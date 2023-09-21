@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Link, Outlet, Route, Routes, useParams } from 'react-router-dom';
-import './styles/FinalCheckout.css';
+import './styles/Checkout.css';
 import * as sakilaApi from './sakilaApi';
 import DropdownList from './DropdownList';
 
@@ -11,68 +11,213 @@ function FinalCheckout() {
     const { film_id, customer_id } = useParams();
 
     const [film, setFilm] = useState({});
+    var [img, setImg] = useState({});
     const [customer, setCustomer] = useState({});
     const [dataLoaded, setDataLoaded] = useState(false);
     const [editableCustomer, setEditableCustomer] = useState({});
+    const [canUpdate, setCanUpdate] = useState(false);
+    const [updateSuccessful, setUpdateSuccessful] = useState(false);
+    const [orders, setOrders] = useState([]);
 
-    function handleConfirmOrder() {
+    async function handleConfirmOrder() {
+        const newInventory = await sakilaApi.save(sakilaApi.Entities.Inventory, {
+            'film': film,
+            'store': customer.store,
+            // 'film_film_id': 0,
+            // 'inventory_inventory_id': 0,
+            // 'inventories_inventory_id': 0,
+        });
 
+        const newRental = await sakilaApi.save(sakilaApi.Entities.Rental, {
+            'inventory': newInventory,
+            'customer': customer,
+            'staff': customer.store.manager
+        });
+
+        console.log(newRental);
+
+        const newOrders = Array.from(orders);
+        newOrders.push(newRental.rental_id);
+        setOrders(newOrders);
+
+        console.log(newOrders);
     }
 
     function handleAddressEdit(k, v) {
-        editableCustomer.address.k = v;
+        setCanUpdate(true);
+        editableCustomer.address[k] = v;
         setEditableCustomer(editableCustomer);
         console.log(editableCustomer);
         console.log(customer);
     }
 
     function handleCustomerEdit(k, v) {
+        setCanUpdate(true);
         editableCustomer[k] = v;
         setEditableCustomer(editableCustomer);
         console.log(editableCustomer);
         console.log(customer);
     }
 
+    async function handleUpdate(e) {
+
+        const a = await sakilaApi.save(sakilaApi.Entities.Address, editableCustomer.address);
+        editableCustomer.address = a;
+        const c = await sakilaApi.save(sakilaApi.Entities.Customer, editableCustomer);
+        setCustomer(c);
+        setEditableCustomer(Object.fromEntries(Object.entries(c)));
+        setCanUpdate(false);
+        setUpdateSuccessful(true);
+    }
+    async function handleRevert(e) {
+
+        window.location.reload();
+    }
+
+    async function undoOrder() {
+        console.log(orders);
+        const rentalId = orders[orders.length - 1];
+        await sakilaApi.deleteById(sakilaApi.Entities.Rental, rentalId);
+        setOrders(orders.slice(0, orders.length - 1));
+        console.log(orders);
+    }
+
     useEffect(() => {
 
-        sakilaApi.getById(sakilaApi.Entities.Film, film_id).then((f) => setFilm(f));
-        sakilaApi.getById(sakilaApi.Entities.Customer, customer_id).then((c) => {
-            setCustomer(c);
-            setEditableCustomer(Object.fromEntries(Object.entries(c)));
-            console.log(c);
-            setDataLoaded(true);
+        sakilaApi.getById(sakilaApi.Entities.Film, film_id).then((f) => {
 
+            const imagePath = require(`./assets/posters/${f.title}.png`);
+            setFilm(f);
+            setImg(imagePath);
+
+        }).then(() => {
+            sakilaApi.getById(sakilaApi.Entities.Customer, customer_id).then((c) => {
+                setCustomer(c);
+                setEditableCustomer(Object.fromEntries(Object.entries(c)));
+                console.log(c);
+                setDataLoaded(true);
+
+            });
         });
 
-        sakilaApi.getInventoriesByFilmIdAndStoreId. // TODO:
+
+        //sakilaApi.getInventoriesByFilmIdAndStoreId. // TODO:
 
     }, []);
 
+    const logo = require('./assets/logo.png');
+
     return (
-        <div>
-            <h1>We're ready to complete your order, {customer.first_name}</h1>
+        <div class="form-container">
 
-            {dataLoaded && (
+            <ul>
+
+                <h1>We're ready to complete your order, {customer.first_name}</h1>
+
+                {/* <div class="movie-static-container">
+                <img class="movie-static" src={img} />
+            </div> */}
+
                 <div>
-                    <h2>Please confirm the following details are correct:</h2>
-                    <label>First Name: </label>
-                    <input defaultValue={customer.first_name} onChange={(e) => handleCustomerEdit("first_name", e.target.value)}></input>
-                    <label>Last Name: </label>
-                    <input defaultValue={customer.last_name} onChange={(e) => handleCustomerEdit("last_name", e.target.value)}></input>
-                    <label>Phone Number: </label>
-                    <input defaultValue={customer.phone} onChange={(e) => handleAddressEdit("phone", e.target.value)}></input>
-                    <label>Address Line 1: </label>
-                    <input defaultValue={customer.address.address} onChange={(e) => handleAddressEdit("address", e.target.value)}></input>
-                    <label>Address Line 2: </label>
-                    <input defaultValue={customer.address.address2} onChange={(e) => handleAddressEdit("address2", e.target.value)}></input>
-                    <label>District: </label>
-                    <input defaultValue={customer.address.district} onChange={(e) => handleAddressEdit("district", e.target.value)}></input>
+                    <div class="box">
 
-                    <button onClick={handleConfirmOrder}>
-                        Confirm Order
-                    </button>
+                    </div>
+
+
+                    {dataLoaded && (
+                        <div>
+                            <Link to='/'>
+                                <img class='logo' src={logo} />
+                            </Link>
+                            <div class="form right">
+                                <ul class="form-inputs">
+                                    <li>
+                                        <h2>Please confirm the following details are correct:</h2>
+
+
+                                    </li>
+                                    <li>
+                                        <label>First Name: </label>
+                                        <input defaultValue={customer.first_name} onChange={(e) => handleCustomerEdit("first_name", e.target.value)}></input>
+
+                                    </li>
+                                    <li>
+                                        <label>Last Name: </label>
+                                        <input defaultValue={customer.last_name} onChange={(e) => handleCustomerEdit("last_name", e.target.value)}></input>
+
+                                    </li>
+                                    <li>
+                                        <label>Phone Number: </label>
+                                        <input defaultValue={customer.phone} onChange={(e) => handleAddressEdit("phone", e.target.value)}></input>
+
+                                    </li>
+                                    <li>
+                                        <label>Address Line 1: </label>
+                                        <input defaultValue={customer.address.address} onChange={(e) => handleAddressEdit("address", e.target.value)}></input>
+
+                                    </li>
+                                    <li>
+                                        <label>Address Line 2: </label>
+                                        <input defaultValue={customer.address.address2} onChange={(e) => handleAddressEdit("address2", e.target.value)}></input>
+
+                                    </li>
+                                    <li>
+                                        <label>District: </label>
+                                        <input defaultValue={customer.address.district} onChange={(e) => handleAddressEdit("district", e.target.value)}></input>
+
+                                    </li>
+                                    {
+                                        canUpdate && (
+                                            <div>
+                                                <button onClick={handleUpdate}>
+                                                    Update
+                                                </button>
+                                                <button onClick={handleRevert}>
+                                                    Revert Changes
+                                                </button>
+                                            </div>
+                                        )
+                                    }
+                                    {
+                                        (!canUpdate && updateSuccessful)
+                                        && (
+                                            <p>Your details have been updated</p>
+                                        )
+                                    }
+                                    <li>
+                                        <ul style={{ 'display': 'inline-block' }}>
+                                            <div class="movie-static-container-small">
+                                                <img class="movie-static-small" src={img} />
+                                            </div>
+                                            <p>
+                                                {film.title} x 1 (£{film.rental_rate})
+                                            </p>
+                                        </ul>
+                                    </li>
+
+                                    <button onClick={handleConfirmOrder}>
+                                        Confirm Order
+                                    </button>
+                                    {
+                                        (orders.length > 0) &&
+
+                                        (<div>
+                                            <button onClick={undoOrder} style={{ 'color': 'red' }}>
+                                                Undo Last Order
+                                            </button>
+                                        </div>)
+
+
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
+                    )}
                 </div>
-            )}
+            </ul>
+
+
         </div>
     )
 
