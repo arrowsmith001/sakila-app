@@ -30,7 +30,7 @@ function SplashScreen({ escape: escape }) {
     }
 
     return (
-        <div onClick={(e) => onClick()} style={{ 'height': '100vh', 'width': '100%', 'backgroundColor': 'black' }}>
+        <div id="splash" onClick={(e) => onClick()} style={{ 'height': '100vh', 'width': '100%', 'backgroundColor': 'black' }}>
             <button id="skip-intro-button" style={{ 'width': 0, 'height': 0, 'opacity': 0 }} onClick={(e) => escape()} />
 
             {isLoading &&

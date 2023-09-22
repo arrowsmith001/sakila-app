@@ -123,11 +123,11 @@ function Checkout() {
             <h2>
                 Enter email address:
             </h2>
-            <input onChange={(e) => setEmail(e.target.value)} />
-            <button onClick={handleSubmitExistingEmail}>
+            <input id='existing-email-input' onChange={(e) => setEmail(e.target.value)} />
+            <button id="submit-existing-email" onClick={handleSubmitExistingEmail}>
                 Submit
             </button>
-            <p class="error-text">{existingErrorText}</p>
+            <p id="existing-email-error" class="error-text">{existingErrorText}</p>
         </div>
 
         <div id="new-customers-form" class='form new-customers-form'>

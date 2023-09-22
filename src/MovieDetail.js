@@ -17,13 +17,23 @@ function MovieDetail() {
     var [rating, setRating] = useState({});
     var [runTimeString, setRunTimeString] = useState('');
     var [starringString, setStarringString] = useState('');
+    var [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
 
         sakilaApi.getById(sakilaApi.Entities.Film, id).then((movie) => {
 
-            const imagePath = require(`./assets/posters/${movie.title}.png`);
+            var imagePath;
+            try {
+
+                imagePath = require(`./assets/posters/${movie.title}.png`);
+            }
+            catch (e) {
+
+                imagePath = require(`./assets/posters/title.png`);
+            }
+
             const adjective = movie.description.split(" ")[1];
 
             const bg = require(`./assets/backgrounds/${adjective}.jpg`);
@@ -45,13 +55,14 @@ function MovieDetail() {
             setImg(imagePath);
             setRating(ratingImg);
             setStarringString(starringString);
+            setLoading(false);
         })
 
     }, []);
 
 
-    return (
-        <div class="movie-detail-container" style={{ backgroundImage: `url(${bg})` }} >
+    return !loading && (
+        <div id="movie-detail-container" class="movie-detail-container" style={{ backgroundImage: `url(${bg})` }} >
             <div className='movie-detail-shadow'>
 
                 <div class='movie-detail-left'>
