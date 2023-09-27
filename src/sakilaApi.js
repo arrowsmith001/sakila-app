@@ -1,5 +1,9 @@
 
-const baseUrl = "http://127.0.0.1:8080";
+const localUrl = "http://127.0.0.1:8080";
+const awsUrl = "http://sakila-new-env.eba-6gntquju.eu-west-2.elasticbeanstalk.com";
+
+
+const baseUrl = awsUrl;
 
 export const Operations = {
     getAll: 'Get All',
