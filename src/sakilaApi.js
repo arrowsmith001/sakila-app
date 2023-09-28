@@ -1,6 +1,6 @@
 
-const baseUrl = process.env.SAKILA_API_URL || "http://localhost:8080";
-console.log(process.env.SAKILA_API_URL);
+const baseUrl = process.env.REACT_APP_SAKILA_API_URL || "http://localhost:8080";
+console.log(process.env.REACT_APP_SAKILA_API_URL);
 console.log(baseUrl);
 
 
