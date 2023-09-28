@@ -6,7 +6,7 @@ frontend:
         - npm ci
     build:
       commands:
-        - SAKILA_API_URL=${SAKILA_API_URL}
+        - echo "SAKILA_API_URL=${SAKILA_API_URL}" >> .env
         - npm run build
   artifacts:
     baseDirectory: build
