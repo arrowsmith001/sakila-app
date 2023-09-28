@@ -37,6 +37,7 @@ function Checkout() {
 
         addressForm["last_update"] = new Date().toISOString().slice(0, 10);
 
+        console.log(addressForm);
         const newAddress = await sakilaApi.save(sakilaApi.Entities.Address, addressForm);
         console.log(newAddress);
         if (newAddress == null || newAddress == undefined) {
