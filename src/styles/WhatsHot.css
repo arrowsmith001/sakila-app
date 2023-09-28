@@ -6,8 +6,10 @@
     flex-wrap: wrap;
     display: flex;
     height: 100%;
-    justify-content: center;
+    width: 100%;
+    justify-content: left;
     padding-bottom: 200px;
+    padding-left: 24px;
 }
 
 .films-by-category-list-container {

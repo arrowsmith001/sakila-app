@@ -39,7 +39,7 @@ function MovieDetail() {
             const bg = require(`./assets/backgrounds/${adjective}.jpg`);
             const ratingImg = require(`./assets/ratings/${movie.rating}.svg`);
 
-            const starringString = 'Starring: ' + movie.actors.map((a) => a.first_name + ' ' + a.last_name).join(', ');
+            const starringString = 'Starring: ' + movie.actors.map((a) => a.firstName + ' ' + a.lastName).join(', ');
 
 
             const runTimeInt = movie.length;
@@ -87,7 +87,7 @@ function MovieDetail() {
                             <p class="runTime">{runTimeString}</p>
                         </div>
                         <div className='rent-buttons'>
-                            <Link to={"/checkout/" + movie.film_id}>
+                            <Link to={"/checkout/" + movie.filmId}>
                                 <div className='button'>
                                     Rent Now for £{movie.rental_rate}
                                 </div>

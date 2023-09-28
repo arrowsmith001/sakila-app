@@ -13,6 +13,7 @@ import WhatsHot from './WhatsHot';
 import Home from './Home';
 import SplashScreen from './SplashScreen';
 import { Helmet } from "react-helmet";
+import Search from './Search';
 
 
 function App() {
@@ -52,10 +53,11 @@ function App() {
                 <Route path="/hot" element={<WhatsHot />} />
                 <Route path="/category" element={<FilmsByCategoryList />} />
                 <Route path="/movie/:id" element={<MovieDetail />} />
+                <Route path="/search" element={<Search />} />
               </Route>
 
               <Route path="/checkout/:id" element={<Checkout />} />
-              <Route path="/checkout/:film_id/customer/:customer_id" element={<FinalCheckout />} />
+              <Route path="/checkout/:filmId/customer/:customerId" element={<FinalCheckout />} />
             </Routes>
           </BrowserRouter>
         </div>

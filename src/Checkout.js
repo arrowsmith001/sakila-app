@@ -28,14 +28,14 @@ function Checkout() {
         setNewErrorText("");
 
         if (addressForm.address == null
-            || addressForm.postal_code == null
-            || form.first_name == null
-            || form.last_name == null) {
+            || addressForm.postalCode == null
+            || form.firstName == null
+            || form.lastName == null) {
             setNewErrorText("Some required fields are missing");
             return;
         }
 
-        addressForm["last_update"] = new Date().toISOString().slice(0, 10);
+        addressForm["lastUpdate"] = new Date().toISOString().slice(0, 10);
 
         console.log(addressForm);
         const newAddress = await sakilaApi.save(sakilaApi.Entities.Address, addressForm);
@@ -47,15 +47,18 @@ function Checkout() {
 
         form["address"] = newAddress;
         form["active"] = true;
-        form["create_date"] = new Date().toISOString().slice(0, 10);
+        form["createDate"] = new Date().toISOString().slice(0, 10);
 
         const newCustomer = await sakilaApi.save(sakilaApi.Entities.Customer, form);
-        if (newCustomer == null || newCustomer == undefined) {
+
+        if (newCustomer === null || newCustomer === undefined) {
             setNewErrorText("There was an error with your customer details")
             return;
         }
+        else {
+            navigate("customer/" + newCustomer.customerId);
+        }
 
-        navigate("customer/" + newCustomer.customer_id);
 
 
     }
@@ -121,7 +124,7 @@ function Checkout() {
             setExistingErrorText("Sorry, we couldn't find that email address")
         }
         else {
-            navigate("customer/" + c.customer_id);
+            navigate("customer/" + c.customerId);
         }
     }
 
@@ -156,12 +159,12 @@ function Checkout() {
                 <ul class="form-inputs">
                     <li>
                         <label>*First Name: </label>
-                        <input id="first-name-input" onChange={(e) => handleFormEntry("first_name", e.target.value)}></input>
+                        <input id="first-name-input" onChange={(e) => handleFormEntry("firstName", e.target.value)}></input>
 
                     </li>
                     <li>
                         <label>*Last Name: </label>
-                        <input id="last-name-input" onChange={(e) => handleFormEntry("last_name", e.target.value)}></input>
+                        <input id="last-name-input" onChange={(e) => handleFormEntry("lastName", e.target.value)}></input>
 
                     </li>
                     <li>
@@ -193,12 +196,12 @@ function Checkout() {
                     </li>
                     <li>
                         <label>*Postcode: </label>
-                        <input id="postcode-input" onChange={(e) => handleAddressFormEntry("postal_code", e.target.value)}></input>
+                        <input id="postcode-input" onChange={(e) => handleAddressFormEntry("postalCode", e.target.value)}></input>
                     </li>
 
                     <li>
                         <DropdownList label="Select your City: "
-                            items={cities.map((c) => c.city)}
+                            items={cities.map((c) => c.cityName)}
                             selectedOption={selectedCity}
                             onOptionChange={handleSelectedCityChange}>
                         </DropdownList>
@@ -206,7 +209,7 @@ function Checkout() {
 
                     <li>
                         <DropdownList label="Select your nearest store: "
-                            items={stores.map((s) => s.address.address + ' (' + s.address.city.city + ')')}
+                            items={stores.map((s) => s.address.address + ' (' + s.address.city.cityName + ')')}
                             selectedOption={selectedStore}
                             onOptionChange={handleSelectedStoreChange}>
                         </DropdownList>

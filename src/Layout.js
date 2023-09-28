@@ -11,6 +11,7 @@ import * as ReactDOM from 'react-dom';
 
 function Layout() {
   const logo = require(`./assets/logo.png`);
+  const searchPath = require(`./assets/search.png`);
 
   function firstTime() {
 
@@ -40,6 +41,13 @@ function Layout() {
             <li>
               <Link to='/category'>
                 <h3>Categories</h3>
+              </Link>
+            </li>
+            <li>
+              <Link to='/search'>
+                <img width={25} height={25} src={searchPath}></img>
+                <h3>Search</h3>
+
               </Link>
             </li>
           </ul>

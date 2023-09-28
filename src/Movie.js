@@ -13,6 +13,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 function Movie(props) {
 
     const movie = props.movie;
+    console.log(movie);
     var imagePath;
 
     try {
@@ -26,8 +27,8 @@ function Movie(props) {
 
     return (
         <ErrorBoundary>
-            <Link to={'/movie/' + movie.film_id}>
-                <div id={"movie-" + movie.film_id} key={movie.id} className='movie'>
+            <Link to={'/movie/' + movie.filmId}>
+                <div id={"movie-" + movie.filmId} key={movie.id} className='movie'>
 
                     <div className="movie__thumbnail">
                         <img

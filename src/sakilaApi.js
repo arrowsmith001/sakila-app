@@ -1,7 +1,6 @@
 
 const baseUrl = process.env.REACT_APP_SAKILA_API_URL || "http://localhost:8080";
-console.log(process.env.REACT_APP_SAKILA_API_URL);
-console.log(baseUrl);
+console.log("REACT_APP_SAKILA_API_URL: " + process.env.REACT_APP_SAKILA_API_URL);
 
 
 export const Operations = {
@@ -50,6 +49,15 @@ export async function getAllFilmsByCategoryId(categoryId) {
 export async function getRandomFilmSelection(limit) {
 
     const response = await fetch(baseUrl + '/film/random/' + limit);
+
+    const json = await response.json();
+
+    return json;
+}
+
+export async function searchFilmsByTerm(term, limit) {
+
+    const response = await fetch(baseUrl + '/film/search?term=' + term + '&limit=' + limit);
 
     const json = await response.json();
 

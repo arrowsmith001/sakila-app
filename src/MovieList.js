@@ -17,7 +17,7 @@ function MovieList({ category: category }) {
 
     useEffect(() => {
 
-        sakilaApi.getAllFilmsByCategoryId(category.category_id).then((films) => {
+        sakilaApi.getAllFilmsByCategoryId(category.categoryId).then((films) => {
             setMovies(films);
         })
 

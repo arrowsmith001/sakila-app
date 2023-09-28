@@ -8,7 +8,7 @@ import DropdownList from './DropdownList';
 
 function FinalCheckout() {
 
-    const { film_id, customer_id } = useParams();
+    const { filmId, customerId } = useParams();
 
     const [film, setFilm] = useState({});
     var [img, setImg] = useState({});
@@ -22,10 +22,7 @@ function FinalCheckout() {
     async function handleConfirmOrder() {
         const newInventory = await sakilaApi.save(sakilaApi.Entities.Inventory, {
             'film': film,
-            'store': customer.store,
-            // 'film_film_id': 0,
-            // 'inventory_inventory_id': 0,
-            // 'inventories_inventory_id': 0,
+            'store': customer.store
         });
 
         const newRental = await sakilaApi.save(sakilaApi.Entities.Rental, {
@@ -37,7 +34,7 @@ function FinalCheckout() {
         console.log(newRental);
 
         const newOrders = Array.from(orders);
-        newOrders.push(newRental.rental_id);
+        newOrders.push(newRental.rentalId);
         setOrders(newOrders);
 
         console.log(newOrders);
@@ -84,14 +81,14 @@ function FinalCheckout() {
 
     useEffect(() => {
 
-        sakilaApi.getById(sakilaApi.Entities.Film, film_id).then((f) => {
+        sakilaApi.getById(sakilaApi.Entities.Film, filmId).then((f) => {
 
             const imagePath = require(`./assets/posters/${f.title}.png`);
             setFilm(f);
             setImg(imagePath);
 
         }).then(() => {
-            sakilaApi.getById(sakilaApi.Entities.Customer, customer_id).then((c) => {
+            sakilaApi.getById(sakilaApi.Entities.Customer, customerId).then((c) => {
                 setCustomer(c);
                 setEditableCustomer(Object.fromEntries(Object.entries(c)));
                 console.log(c);
@@ -112,7 +109,7 @@ function FinalCheckout() {
 
             <ul>
 
-                <h1>We're ready to complete your order, {customer.first_name}</h1>
+                <h1>We're ready to complete your order, {customer.firstName}</h1>
 
                 {/* <div class="movie-static-container">
                 <img class="movie-static" src={img} />
@@ -138,12 +135,12 @@ function FinalCheckout() {
                                     </li>
                                     <li>
                                         <label>First Name: </label>
-                                        <input defaultValue={customer.first_name} onChange={(e) => handleCustomerEdit("first_name", e.target.value)}></input>
+                                        <input defaultValue={customer.firstName} onChange={(e) => handleCustomerEdit("firstName", e.target.value)}></input>
 
                                     </li>
                                     <li>
                                         <label>Last Name: </label>
-                                        <input defaultValue={customer.last_name} onChange={(e) => handleCustomerEdit("last_name", e.target.value)}></input>
+                                        <input defaultValue={customer.lastName} onChange={(e) => handleCustomerEdit("lastName", e.target.value)}></input>
 
                                     </li>
                                     <li>
