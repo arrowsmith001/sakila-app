@@ -1,9 +1,5 @@
 
-const localUrl = "http://localhost:8080";
-const awsUrl = "https://alex.fergcb.uk";
-
-
-const baseUrl = awsUrl;
+const baseUrl = process.env.SAKILA_API_URL ?? "http://localhost:8080";
 
 export const Operations = {
     getAll: 'Get All',
