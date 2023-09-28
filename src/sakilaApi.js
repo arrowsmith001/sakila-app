@@ -1,6 +1,6 @@
 
-const localUrl = "http://127.0.0.1:8080";
-const awsUrl = "http://sakila-new-env.eba-6gntquju.eu-west-2.elasticbeanstalk.com";
+const localUrl = "http://localhost:8080";
+const awsUrl = "https://alex.fergcb.uk";
 
 
 const baseUrl = awsUrl;
