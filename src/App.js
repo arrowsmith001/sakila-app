@@ -12,6 +12,7 @@ import FinalCheckout from './FinalCheckout';
 import WhatsHot from './WhatsHot';
 import Home from './Home';
 import SplashScreen from './SplashScreen';
+import { Helmet } from "react-helmet";
 
 
 function App() {
@@ -33,6 +34,11 @@ function App() {
 
   return (
     <div className="App">
+
+      <Helmet>
+        <title>Sakila</title>
+      </Helmet>
+
       {isLoading ? (
         <SplashScreen escape={() => setIsLoading(false)} />
       ) : (
