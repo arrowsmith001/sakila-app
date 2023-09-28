@@ -21,6 +21,8 @@ function Checkout() {
     const [existingErrorText, setExistingErrorText] = useState("");
     const [newErrorText, setNewErrorText] = useState("");
 
+    const [isLoading, setIsLoading] = useState(true);
+
 
     async function onCreateAccount() {
         setNewErrorText("");
@@ -59,15 +61,19 @@ function Checkout() {
 
     useEffect(() => {
 
-        sakilaApi.getAll(sakilaApi.Entities.City).then((c) => {
+        const apiCall1 = sakilaApi.getAll(sakilaApi.Entities.City).then((c) => {
             setCities(c);
             handleAddressFormEntry("city", c[0]);
         });
 
-        sakilaApi.getAll(sakilaApi.Entities.Store).then((s) => {
+        const apiCall2 = sakilaApi.getAll(sakilaApi.Entities.Store).then((s) => {
             setStores(s);
             handleFormEntry("store", s[0]);
         });
+
+        await[apiCall1, apiCall2];
+
+        setIsLoading(false);
 
 
     }, []);
@@ -111,7 +117,7 @@ function Checkout() {
     }
 
     const logo = require('./assets/logo.png');
-    return (<div className='form-container'>
+    return !isLoading && (<div className='form-container'>
 
         <Link to='/'>
             <img class='logo' src={logo} />
