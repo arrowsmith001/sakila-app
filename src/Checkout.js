@@ -61,6 +61,13 @@ function Checkout() {
 
     useEffect(() => {
 
+        setup();
+
+
+    }, []);
+
+    async function setup() {
+
         const apiCall1 = sakilaApi.getAll(sakilaApi.Entities.City).then((c) => {
             setCities(c);
             handleAddressFormEntry("city", c[0]);
@@ -71,12 +78,13 @@ function Checkout() {
             handleFormEntry("store", s[0]);
         });
 
-        await[apiCall1, apiCall2];
+        const a = {
+            result1: await apiCall1,
+            result2: await apiCall2,
+        };
 
         setIsLoading(false);
-
-
-    }, []);
+    }
 
     function handleSelectedStoreChange(s) {
         var i = parseInt(s);
