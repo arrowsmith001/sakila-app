@@ -1,5 +1,5 @@
 
-const baseUrl = process.env.SAKILA_API_URL ?? "http://localhost:8080";
+const baseUrl = process.env.SAKILA_API_URL || "http://localhost:8080";
 
 export const Operations = {
     getAll: 'Get All',
