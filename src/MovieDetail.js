@@ -89,7 +89,7 @@ function MovieDetail() {
                         <div className='rent-buttons'>
                             <Link to={"/checkout/" + movie.filmId}>
                                 <div className='button'>
-                                    Rent Now for £{movie.rental_rate}
+                                    Rent Now for £{movie.rentalRate}
                                 </div>
 
                             </Link>

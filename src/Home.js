@@ -7,6 +7,7 @@ import FilmsByCategoryList from './FilmsByCategoryList';
 import * as ReactDOM from 'react-dom';
 import './styles/WhatsHot.css';
 import Movie from './Movie';
+import Spinner from './Spinner';
 
 
 function Home() {
@@ -27,7 +28,7 @@ function Home() {
 
     }, []);
 
-    return loaded && (
+    return !loaded ? (<Spinner></Spinner>) : (
         <div className='container'>
             {/* <div class="title-container"  style={{ backgroundImage: `url(${bg})` }}> */}
 

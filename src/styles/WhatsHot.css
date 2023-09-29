@@ -17,6 +17,10 @@
     padding-top: 150px;
 }
 
+#label {
+    font-size: large;
+}
+
 .movie-container {
     padding-top: 200px;
     height: 350px;

@@ -7,6 +7,7 @@ import FilmsByCategoryList from './FilmsByCategoryList';
 import * as ReactDOM from 'react-dom';
 import './styles/WhatsHot.css';
 import Movie from './Movie';
+import Spinner from './Spinner';
 
 
 function WhatsHot() {
@@ -26,7 +27,7 @@ function WhatsHot() {
 
     }, []);
 
-    return !loading && (
+    return loading ? (<Spinner></Spinner>) : (
         <div id="whats-hot-loaded-root" className='container'>
             {/* <div class="title-container"  style={{ backgroundImage: `url(${bg})` }}> */}
 

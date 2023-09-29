@@ -7,6 +7,7 @@ import FilmsByCategoryList from './FilmsByCategoryList';
 import * as ReactDOM from 'react-dom';
 import './styles/WhatsHot.css';
 import Movie from './Movie';
+import Spinner from './Spinner';
 
 
 function Search() {
@@ -14,17 +15,20 @@ function Search() {
     var [movies, setMovies] = useState([]);
     var [term, setTerm] = useState("");
 
-    var [loaded, setLoaded] = useState(true);
+    var [isLoading, setIsLoading] = useState(false);
 
 
     const bg = require('./assets/cinema.jpg');
 
     async function handleSearchTermEntry(term) {
-        runSearch(term);
+        setTerm(term);
+        if (term !== "") {
+            runSearch(term);
+        }
     }
 
     async function runSearch(term) {
-        setLoaded(false);
+        setIsLoading(true);
 
         if (term == "") {
             setMovies([]);
@@ -32,7 +36,7 @@ function Search() {
         else {
             sakilaApi.searchFilmsByTerm(term, 20).then((films) => {
                 setMovies(films);
-                setLoaded(true);
+                setIsLoading(false);
             });
         }
     }
@@ -41,22 +45,27 @@ function Search() {
         <div className='container'>
             {/* <div class="title-container"  style={{ backgroundImage: `url(${bg})` }}> */}
 
-            <label>Search: </label>
-            <input style={{ color: 'black' }} id="search-input" onChange={(e) => handleSearchTermEntry(e.target.value)}></input>
+            <div style={{ paddingLeft: '32px' }}>
 
-            {loaded && (<div className='wrap-container'>
+                <label style={{ fontSize: "32px" }}>Search: </label>
+                <input style={{ color: 'black' }} id="search-input" onChange={(e) => handleSearchTermEntry(e.target.value)}></input>
+            </div>
+
+            {isLoading ? (<Spinner></Spinner>) :
+                term === "" ? (<div></div>) :
+                    movies.length == 0 ? (<div style={{ padding: "32px" }}><h1>No Results for "{term}"</h1></div>) : (<div className='wrap-container'>
 
 
-                {movies.map((m) => {
+                        {movies.map((m) => {
 
-                    return (
-                        <div className='movie-container'>
-                            <Movie movie={m} />
-                        </div>
-                    )
+                            return (
+                                <div className='movie-container'>
+                                    <Movie movie={m} />
+                                </div>
+                            )
 
-                })}
-            </div>)}
+                        })}
+                    </div>)}
         </div>
     )
 }

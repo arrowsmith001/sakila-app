@@ -5,6 +5,7 @@ import './styles/Checkout.css';
 import * as sakilaApi from './sakilaApi';
 import DropdownList from './DropdownList';
 import { useNavigate } from "react-router-dom";
+import Spinner from './Spinner';
 
 function Checkout() {
 
@@ -27,7 +28,7 @@ function Checkout() {
     async function onCreateAccount() {
         setNewErrorText("");
 
-        if (addressForm.address == null
+        if (addressForm.address1 == null
             || addressForm.postalCode == null
             || form.firstName == null
             || form.lastName == null) {
@@ -129,7 +130,9 @@ function Checkout() {
     }
 
     const logo = require('./assets/logo.png');
-    return !isLoading && (<div className='form-container'>
+    return isLoading ? (<div style={{ width: '100vw', height: "100vh", backgroundColor: 'black' }}>
+        <Spinner></Spinner>
+    </div>) : (<div className='form-container'>
 
         <Link to='/'>
             <img class='logo' src={logo} />
@@ -142,7 +145,7 @@ function Checkout() {
                 Enter email address:
             </h2>
             <input id='existing-email-input' onChange={(e) => setEmail(e.target.value)} />
-            <button id="submit-existing-email" onClick={handleSubmitExistingEmail}>
+            <button style={{ marginLeft: '24px' }} id="submit-existing-email" onClick={handleSubmitExistingEmail}>
                 Submit
             </button>
             <p id="existing-email-error" class="error-text">{existingErrorText}</p>
@@ -180,7 +183,7 @@ function Checkout() {
                     <li>
 
                         <label>*Address Line 1: </label>
-                        <input id="address-input" onChange={(e) => handleAddressFormEntry("address", e.target.value)}></input>
+                        <input id="address-input" onChange={(e) => handleAddressFormEntry("address1", e.target.value)}></input>
 
                     </li>
                     <li>
@@ -209,7 +212,7 @@ function Checkout() {
 
                     <li>
                         <DropdownList label="Select your nearest store: "
-                            items={stores.map((s) => s.address.address + ' (' + s.address.city.cityName + ')')}
+                            items={stores.map((s) => s.address.address1 + ' (' + s.address.city.cityName + ')')}
                             selectedOption={selectedStore}
                             onOptionChange={handleSelectedStoreChange}>
                         </DropdownList>

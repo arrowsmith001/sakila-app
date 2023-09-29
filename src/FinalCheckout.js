@@ -145,12 +145,12 @@ function FinalCheckout() {
                                     </li>
                                     <li>
                                         <label>Phone Number: </label>
-                                        <input defaultValue={customer.phone} onChange={(e) => handleAddressEdit("phone", e.target.value)}></input>
+                                        <input defaultValue={customer.address.phone} onChange={(e) => handleAddressEdit("phone", e.target.value)}></input>
 
                                     </li>
                                     <li>
                                         <label>Address Line 1: </label>
-                                        <input defaultValue={customer.address.address} onChange={(e) => handleAddressEdit("address", e.target.value)}></input>
+                                        <input defaultValue={customer.address.address1} onChange={(e) => handleAddressEdit("address1", e.target.value)}></input>
 
                                     </li>
                                     <li>
@@ -187,7 +187,7 @@ function FinalCheckout() {
                                                 <img class="movie-static-small" src={img} />
                                             </div>
                                             <p>
-                                                {film.title} x 1 (£{film.rental_rate})
+                                                {film.title} x 1 (£{film.rentalRate})
                                             </p>
                                         </ul>
                                     </li>
