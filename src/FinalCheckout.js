@@ -192,17 +192,21 @@ function FinalCheckout() {
                                         </ul>
                                     </li>
 
+
                                     <button onClick={handleConfirmOrder}>
                                         Confirm Order
                                     </button>
+
                                     {
                                         (orders.length > 0) &&
 
-                                        (<div>
-                                            <button onClick={undoOrder} style={{ 'color': 'red' }}>
-                                                Undo Last Order
-                                            </button>
-                                        </div>)
+                                        (
+                                            <div>
+                                                <button onClick={undoOrder} style={{ 'color': 'red' }}>
+                                                    Undo Last Order
+                                                </button>
+                                            </div>
+                                        )
 
 
                                     }

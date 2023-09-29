@@ -20,6 +20,8 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const slogo = require("./assets/slogo.png");
+
   useEffect(() => {
     const isFirstVisit = localStorage.getItem('isFirstVisit');
 
@@ -38,6 +40,7 @@ function App() {
 
       <Helmet>
         <title>Sakila</title>
+        <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Instagram-Icon.png/240px-Instagram-Icon.png" sizes="16x16" />
       </Helmet>
 
       {isLoading ? (

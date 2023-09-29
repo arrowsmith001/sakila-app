@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Link, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Link, NavLink, Outlet, Route, Routes } from 'react-router-dom';
 
 import './styles/Layout.css';
 import MovieList from './MovieList';
@@ -21,6 +21,10 @@ function Layout() {
     localStorage.removeItem('isFirstVisit');
   }
 
+  function handleChange(e) {
+    console.log('click' + e.target);
+  }
+
   return (
     <div className="layout">
       <div className="sidebar">
@@ -33,13 +37,13 @@ function Layout() {
         <div className="sidebar__menu">
           <ul>
             <li>
-              <Link to='/'>
+              <Link to='/' >
                 <img className='icon' src={homePath}></img>
                 <h3>Home</h3>
               </Link>
             </li>
             <li>
-              <Link to='/hot'>
+              <Link to='/hot' >
                 <img className='icon' src={hotPath}></img>
                 <h3>What's Hot</h3>
               </Link>
