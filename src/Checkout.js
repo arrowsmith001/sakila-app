@@ -36,7 +36,7 @@ function Checkout() {
             return;
         }
 
-        addressForm["lastUpdate"] = new Date().toISOString().slice(0, 10);
+        addressForm["lastUpdate"] = new Date().toISOString().slice(0, 19);
 
         console.log(addressForm);
         const newAddress = await sakilaApi.save(sakilaApi.Entities.Address, addressForm);
@@ -159,75 +159,125 @@ function Checkout() {
                     New Customers
                 </h1>
 
-                <ul class="form-inputs">
-                    <li>
-                        <label>*First Name: </label>
-                        <input id="first-name-input" onChange={(e) => handleFormEntry("firstName", e.target.value)}></input>
+                <table class="form-inputs">
+                    <tr>
+                        <td className='text-align-end'>
 
-                    </li>
-                    <li>
-                        <label>*Last Name: </label>
-                        <input id="last-name-input" onChange={(e) => handleFormEntry("lastName", e.target.value)}></input>
+                            <label>*First Name: </label>
+                        </td>
+                        <td>
+                            <input id="first-name-input" onChange={(e) => handleFormEntry("firstName", e.target.value)}></input>
 
-                    </li>
-                    <li>
-                        <label>*Email: </label>
-                        <input id="email-input" onChange={(e) => handleFormEntry("email", e.target.value)}></input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className='text-align-end'>
 
-                    </li>
-                    <li>
-                        <label>Phone Number: </label>
-                        <input id="phone-input" onChange={(e) => handleAddressFormEntry("phone", e.target.value)}></input>
+                            <label>*Last Name: </label>
+                        </td>
+                        <td>
 
-                    </li>
-                    <li>
+                            <input id="last-name-input" onChange={(e) => handleFormEntry("lastName", e.target.value)}></input>
+                        </td>
 
-                        <label>*Address Line 1: </label>
-                        <input id="address-input" onChange={(e) => handleAddressFormEntry("address1", e.target.value)}></input>
+                    </tr>
+                    <tr>
+                        <td className='text-align-end'>
 
-                    </li>
-                    <li>
+                            <label>*Email: </label>
+                        </td>
+                        <td>
 
-                        <label>Address Line 2: </label>
-                        <input id="address2-input" onChange={(e) => handleAddressFormEntry("address2", e.target.value)}></input>
+                            <input id="email-input" onChange={(e) => handleFormEntry("email", e.target.value)}></input>
+                        </td>
 
-                    </li>
-                    <li>
-                        <label>District: </label>
-                        <input id="district-input" onChange={(e) => handleAddressFormEntry("district", e.target.value)}></input>
+                    </tr>
+                    <tr>
+                        <td className='text-align-end'>
 
-                    </li>
-                    <li>
-                        <label>*Postcode: </label>
-                        <input id="postcode-input" onChange={(e) => handleAddressFormEntry("postalCode", e.target.value)}></input>
-                    </li>
+                            <label>Phone Number: </label>
+                        </td>
+                        <td>
 
-                    <li>
-                        <DropdownList label="Select your City: "
-                            items={cities.map((c) => c.cityName)}
-                            selectedOption={selectedCity}
-                            onOptionChange={handleSelectedCityChange}>
-                        </DropdownList>
-                    </li>
+                            <input id="phone-input" onChange={(e) => handleAddressFormEntry("phone", e.target.value)}></input>
+                        </td>
 
-                    <li>
-                        <DropdownList label="Select your nearest store: "
-                            items={stores.map((s) => s.address.address1 + ' (' + s.address.city.cityName + ')')}
-                            selectedOption={selectedStore}
-                            onOptionChange={handleSelectedStoreChange}>
-                        </DropdownList>
+                    </tr>
+                    <tr>
 
-                    </li>
+                        <td className='text-align-end'>
+
+                            <label>*Address Line 1: </label>
+                        </td>
+                        <td>
+                            <input id="address-input" onChange={(e) => handleAddressFormEntry("address1", e.target.value)}></input>
+
+                        </td>
 
 
+                    </tr>
+                    <tr>
 
-                </ul>
+                        <td className='text-align-end'>
+
+                            <label>Address Line 2: </label>
+                        </td>
+                        <td>
+
+                            <input id="address2-input" onChange={(e) => handleAddressFormEntry("address2", e.target.value)}></input>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td className='text-align-end'>
+
+                            <label>District: </label>
+                        </td>
+                        <td>
+
+                            <input id="district-input" onChange={(e) => handleAddressFormEntry("district", e.target.value)}></input>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td className='text-align-end'>
+
+                            <label>*Postcode: </label>
+                        </td>
+                        <td>
+
+                            <input id="postcode-input" onChange={(e) => handleAddressFormEntry("postalCode", e.target.value)}></input>
+                        </td>
+                    </tr>
+
+                    <DropdownList label="Select your City"
+                        items={cities.map((c) => c.cityName)}
+                        selectedOption={selectedCity}
+                        onOptionChange={handleSelectedCityChange}
+                        wrapLabel={(l) => (<td className='text-align-end'>{l}</td>)}
+                        wrapSelect={(s) => (<td className='text-align-start'>{s}</td>)}
+                        rootOverride={(r) => (<tr>{r}</tr>)}>
+                    </DropdownList>
+
+                    <DropdownList label="Select your nearest store"
+                        items={stores.map((s) => s.address.address1 + ' (' + s.address.city.cityName + ')')}
+                        selectedOption={selectedStore}
+                        onOptionChange={handleSelectedStoreChange}
+                        wrapLabel={(l) => (<td className='text-align-end'>{l}</td>)}
+                        wrapSelect={(s) => (<td className='text-align-start'>{s}</td>)}
+                        rootOverride={(r) => (<tr>{r}</tr>)}>
+                    </DropdownList>
+
+                </table>
 
 
-                <button onClick={onCreateAccount}>
-                    Create an Account
-                </button>
-                <p class="error-text">{newErrorText}</p>
+                <div className='text-align-center'>
+
+                    <button className='padded' onClick={onCreateAccount}>
+                        Create an Account
+                    </button>
+                    <p class="error-text">{newErrorText}</p>
+                </div>
             </div>
 
         </div>

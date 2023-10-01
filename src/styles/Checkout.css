@@ -33,8 +33,31 @@
     list-style: none;
 }
 
-.form-inputs li {
+td {
+
     padding: 8px;
+}
+
+.padded {
+
+
+    margin: 12px;
+}
+
+.big-padded {
+    margin: 56px;
+}
+
+.text-align-end {
+    text-align: end;
+}
+
+.text-align-start {
+    text-align: start;
+}
+
+.text-align-center {
+    text-align: center;
 }
 
 input,
@@ -98,4 +121,17 @@ h2 {
     top: 0px;
     left: 0px;
     padding: 8px;
+}
+
+.right-panel {
+    padding: 54px;
+    margin-right: 24px;
+    height: 75%;
+    border: 5px solid white;
+    position: absolute;
+    right: 0px;
+}
+
+.order {
+    padding: 12px;
 }

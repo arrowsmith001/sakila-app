@@ -17,6 +17,7 @@ function FinalCheckout() {
     const [editableCustomer, setEditableCustomer] = useState({});
     const [canUpdate, setCanUpdate] = useState(false);
     const [updateSuccessful, setUpdateSuccessful] = useState(false);
+
     const [orders, setOrders] = useState([]);
 
     async function handleConfirmOrder() {
@@ -25,19 +26,19 @@ function FinalCheckout() {
             'store': customer.store
         });
 
+        const lastUpdate = new Date().toISOString().slice(0, 19);
+        console.log(lastUpdate);
+
         const newRental = await sakilaApi.save(sakilaApi.Entities.Rental, {
             'inventory': newInventory,
             'customer': customer,
-            'staff': customer.store.manager
+            'staff': customer.store.manager,
+            'lastUpdate': lastUpdate
         });
 
-        console.log(newRental);
-
         const newOrders = Array.from(orders);
-        newOrders.push(newRental.rentalId);
+        newOrders.push(newRental);
         setOrders(newOrders);
-
-        console.log(newOrders);
     }
 
     function handleAddressEdit(k, v) {
@@ -71,12 +72,15 @@ function FinalCheckout() {
         window.location.reload();
     }
 
-    async function undoOrder() {
-        console.log(orders);
-        const rentalId = orders[orders.length - 1];
-        await sakilaApi.deleteById(sakilaApi.Entities.Rental, rentalId);
-        setOrders(orders.slice(0, orders.length - 1));
-        console.log(orders);
+    async function undoOrder(rental) {
+
+        await sakilaApi.deleteById(sakilaApi.Entities.Rental, rental.rentalId);
+
+        const newOrders = orders.filter((v) => v.rentalId != rental.rentalId);
+
+        setOrders(newOrders);
+
+        console.log(newOrders);
     }
 
     useEffect(() => {
@@ -103,19 +107,20 @@ function FinalCheckout() {
     }, []);
 
     const logo = require('./assets/logo.png');
+    const binIcon = require('./assets/bin.png');
 
     return (
         <div class="form-container">
 
             <ul>
 
-                <h1>We're ready to complete your order, {customer.firstName}</h1>
+                <h1 style={{ position: 'absolute', margin: '12px' }}>We're ready to complete your order, {customer.firstName}</h1>
 
                 {/* <div class="movie-static-container">
                 <img class="movie-static" src={img} />
             </div> */}
 
-                <div>
+                <div className='big-padded'>
                     <div class="box">
 
                     </div>
@@ -126,96 +131,188 @@ function FinalCheckout() {
                             <Link to='/'>
                                 <img class='logo' src={logo} />
                             </Link>
-                            <div class="form right">
-                                <ul class="form-inputs">
-                                    <li>
-                                        <h2>Please confirm the following details are correct:</h2>
+                            <div class="form left">
+                                <h2>Please confirm the following details are correct:</h2>
+                                <table class="form-inputs">
 
 
-                                    </li>
-                                    <li>
-                                        <label>First Name: </label>
-                                        <input defaultValue={customer.firstName} onChange={(e) => handleCustomerEdit("firstName", e.target.value)}></input>
+                                    <tr>
+                                        <td className='text-align-end'>
 
-                                    </li>
-                                    <li>
-                                        <label>Last Name: </label>
-                                        <input defaultValue={customer.lastName} onChange={(e) => handleCustomerEdit("lastName", e.target.value)}></input>
+                                            <label>First Name: </label>
+                                        </td>
+                                        <td>
 
-                                    </li>
-                                    <li>
-                                        <label>Phone Number: </label>
-                                        <input defaultValue={customer.address.phone} onChange={(e) => handleAddressEdit("phone", e.target.value)}></input>
+                                            <input defaultValue={customer.firstName} onChange={(e) => handleCustomerEdit("firstName", e.target.value)}></input>
 
-                                    </li>
-                                    <li>
-                                        <label>Address Line 1: </label>
-                                        <input defaultValue={customer.address.address1} onChange={(e) => handleAddressEdit("address1", e.target.value)}></input>
+                                        </td>
+                                    </tr>
+                                    <tr>
 
-                                    </li>
-                                    <li>
-                                        <label>Address Line 2: </label>
-                                        <input defaultValue={customer.address.address2} onChange={(e) => handleAddressEdit("address2", e.target.value)}></input>
+                                        <td className='text-align-end'>
 
-                                    </li>
-                                    <li>
-                                        <label>District: </label>
-                                        <input defaultValue={customer.address.district} onChange={(e) => handleAddressEdit("district", e.target.value)}></input>
+                                            <label>Last Name: </label>
+                                        </td>
 
-                                    </li>
-                                    {
-                                        canUpdate && (
-                                            <div>
-                                                <button onClick={handleUpdate}>
-                                                    Update
-                                                </button>
-                                                <button onClick={handleRevert}>
-                                                    Revert Changes
-                                                </button>
-                                            </div>
-                                        )
-                                    }
-                                    {
-                                        (!canUpdate && updateSuccessful)
-                                        && (
-                                            <p>Your details have been updated</p>
-                                        )
-                                    }
-                                    <li>
-                                        <ul style={{ 'display': 'inline-block' }}>
+                                        <td>
+
+                                            <input defaultValue={customer.lastName} onChange={(e) => handleCustomerEdit("lastName", e.target.value)}></input>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td className='text-align-end'>
+
+                                            <label>Phone Number: </label>
+                                        </td>
+
+                                        <td>
+
+                                            <input defaultValue={customer.address.phone} onChange={(e) => handleAddressEdit("phone", e.target.value)}></input>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td className='text-align-end'>
+
+                                            <label>Address line 1: </label>
+                                        </td>
+
+                                        <td>
+
+                                            <input defaultValue={customer.address.address1} onChange={(e) => handleAddressEdit("address1", e.target.value)}></input>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td className='text-align-end'>
+
+                                            <label>Address line 2: </label>
+                                        </td>
+
+                                        <td>
+
+                                            <input defaultValue={customer.address.address2} onChange={(e) => handleAddressEdit("address2", e.target.value)}></input>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td className='text-align-end'>
+
+                                            <label>District: </label>
+                                        </td>
+
+                                        <td>
+
+                                            <input defaultValue={customer.address.district} onChange={(e) => handleAddressEdit("district", e.target.value)}></input>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td className='text-align-end'>
+
+                                            <label>Postcode: </label>
+                                        </td>
+
+                                        <td>
+
+                                            <input defaultValue={customer.address.postalCode} onChange={(e) => handleAddressEdit("postalCode", e.target.value)}></input>
+
+                                        </td>
+                                    </tr>
+                                    <tr className='text-align-center'>
+                                        <td></td>
+                                        <td>
+                                            {
+                                                (
+                                                    <div style={{ visibility: canUpdate ? 'visible' : 'hidden' }}>
+                                                        <button onClick={handleUpdate}>
+                                                            Update
+                                                        </button>
+                                                        <button onClick={handleRevert}>
+                                                            Revert Changes
+                                                        </button>
+                                                    </div>
+                                                )
+                                            }
+                                            {
+                                                (<div style={{ visibility: (!canUpdate && updateSuccessful) ? 'visible' : 'hidden' }}>
+                                                    <p>Your details have been updated</p>
+                                                </div>)
+                                            }
+                                        </td>
+
+                                    </tr>
+
+                                    <tr className='text-align-center' >
+                                        <td className='text-align-center'>
+
                                             <div class="movie-static-container-small">
                                                 <img class="movie-static-small" src={img} />
                                             </div>
                                             <p>
                                                 {film.title} x 1 (£{film.rentalRate})
                                             </p>
-                                        </ul>
-                                    </li>
+                                        </td>
+                                        <td>
+                                            <button style={{ backgroundColor: 'red', color: 'white' }} onClick={handleConfirmOrder}>
+                                                Confirm Order
+                                            </button>
+                                        </td>
+                                    </tr>
 
 
-                                    <button onClick={handleConfirmOrder}>
-                                        Confirm Order
-                                    </button>
-
-                                    {
-                                        (orders.length > 0) &&
-
-                                        (
-                                            <div>
-                                                <button onClick={undoOrder} style={{ 'color': 'red' }}>
-                                                    Undo Last Order
-                                                </button>
-                                            </div>
-                                        )
-
-
-                                    }
-
-                                </ul>
+                                </table>
                             </div>
                         </div>
                     )}
                 </div>
+
+
+
+                {
+                    (orders.length > 0) &&
+
+                    (<div className='right-panel'>
+
+                        <h2>Your orders:</h2>
+
+                        {
+
+                            orders.map((order) => {
+
+                                console.log(order);
+
+                                return (
+                                    <tr className='order'>
+                                        <td>
+                                            <img width={25} height={25} src={binIcon} onClick={(e) => undoOrder(order)}>
+                                            </img>
+                                        </td>
+                                        <td>
+
+                                            <h3>
+                                                {order.inventory.film.title}</h3>
+                                            <h3>
+
+                                                {(new Date(order.lastUpdate)).toString().slice(0, 25)}
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        }
+
+                    </div>)
+                }
+
+
+
             </ul>
 
 
